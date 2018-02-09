@@ -23,11 +23,7 @@
             android:layout_height="wrap_content"
             android:inputType="textMultiLine"
             android:hint="Address"/>
-        <Spinner
-            android:id="@+id/gender"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:entries="@array/gender"/>
+
         <EditText
             android:id="@+id/phone"
             android:layout_width="match_parent"
@@ -52,6 +48,11 @@
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:hint="Re-password"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/regButton"
+            android:text="Register"/>
     </LinearLayout>
 
 
