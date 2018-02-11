@@ -8,11 +8,23 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -62,7 +74,7 @@ public class RegisterActivity extends AppCompatActivity {
 
 
         //Toast.makeText(RegisterActivity.this,data,Toast.LENGTH_LONG).show();
-        new UserRegtask().execute();
+        new UserRegtask().execute(n,a,pn,e,pw);
     }
 
     private boolean vlidateFields(EditText ... editTexts) {
@@ -111,24 +123,31 @@ public class RegisterActivity extends AppCompatActivity {
         protected String doInBackground(String... strings) {
             String res = "";
             String urlString = "https://nalanda-super.000webhostapp.com/android/user/login_reg.php";
-            OutputStream out = null;
+            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+
+            nameValuePairs.add(new BasicNameValuePair("name", strings[0]));
+            nameValuePairs.add(new BasicNameValuePair("address", strings[1]));
+            nameValuePairs.add(new BasicNameValuePair("phone", strings[2]));
+            nameValuePairs.add(new BasicNameValuePair("email", strings[3]));
+            nameValuePairs.add(new BasicNameValuePair("password", strings[4]));
+
             try {
+                HttpClient httpClient = new DefaultHttpClient();
 
-                URL url = new URL(urlString);
-                HttpURLConnection con = (HttpURLConnection) url.openConnection();
-                con.setRequestMethod("GET");
-                con.connect();
-                String line ="";
-                BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
-                while ((line = br.readLine()) !=null){
-                    res +=line;
-                }
+                HttpPost httpPost = new HttpPost(urlString);
 
+                httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
+                HttpResponse httpResponse = httpClient.execute(httpPost);
+
+                HttpEntity httpEntity = httpResponse.getEntity();
+                res = String.valueOf(httpEntity.getContent());
+
+            } catch (ClientProtocolException e) {
+
+            } catch (IOException e) {
+
             }
-            //res  = strings[0];
             return res;
         }
     }
