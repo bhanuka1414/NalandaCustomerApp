@@ -8,23 +8,14 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.InputStream;
 
-import java.io.BufferedOutputStream;
+
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -121,8 +112,9 @@ public class RegisterActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... strings) {
-            String res = "";
+            String response = "";
             String urlString = "https://nalanda-super.000webhostapp.com/android/user/login_reg.php";
+            /*
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 
             nameValuePairs.add(new BasicNameValuePair("name", strings[0]));
@@ -130,25 +122,51 @@ public class RegisterActivity extends AppCompatActivity {
             nameValuePairs.add(new BasicNameValuePair("phone", strings[2]));
             nameValuePairs.add(new BasicNameValuePair("email", strings[3]));
             nameValuePairs.add(new BasicNameValuePair("password", strings[4]));
+            */
+            String data = null;
+            try {
+                data =  URLEncoder.encode("name","UTF-8")+"="+URLEncoder.encode(strings[0],"UTF-8")+"&"+
+                        URLEncoder.encode("address","UTF-8")+"="+URLEncoder.encode(strings[1],"UTF-8")+"&"+
+                        URLEncoder.encode("phone","UTF-8")+"="+URLEncoder.encode(strings[2],"UTF-8")+"&"+
+                        URLEncoder.encode("email","UTF-8")+"="+URLEncoder.encode(strings[3],"UTF-8")+"&"+
+                        URLEncoder.encode("password","UTF-8")+"="+URLEncoder.encode(strings[4],"UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+
 
             try {
-                HttpClient httpClient = new DefaultHttpClient();
+                URL url = new URL(urlString);
+                HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setDoInput(true);
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream,"UTF-8"));
 
-                HttpPost httpPost = new HttpPost(urlString);
+                bufferedWriter.write(data);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"iso-8859-1"));
 
-                httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-                HttpResponse httpResponse = httpClient.execute(httpPost);
-
-                HttpEntity httpEntity = httpResponse.getEntity();
-                res = String.valueOf(httpEntity.getContent());
+                String line = "";
+                while ((line = bufferedReader.readLine())!=null)
+                {
+                    response+= line;
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return response;
 
             } catch (ClientProtocolException e) {
 
             } catch (IOException e) {
 
             }
-            return res;
+            return response;
         }
     }
 }
