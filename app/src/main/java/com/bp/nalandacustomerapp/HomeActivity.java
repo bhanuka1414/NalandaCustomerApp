@@ -102,14 +102,16 @@ public class HomeActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_signup) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_myaccount) {
             regLink = (TextView)findViewById(R.id.reg_link);
             Toast.makeText(HomeActivity.this,regLink.getText().toString(),Toast.LENGTH_LONG).show();
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_myorders) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_cart) {
+
+        }else if (id == R.id.nav_message) {
 
         } else if (id == R.id.nav_share) {
 

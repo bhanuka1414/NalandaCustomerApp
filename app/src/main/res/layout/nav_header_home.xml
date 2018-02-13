@@ -23,7 +23,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Register"
-        android:clickable="true"/>
+        android:clickable="true"
+        />
 
     <TextView
         android:id="@+id/login_link"

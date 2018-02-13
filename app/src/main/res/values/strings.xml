@@ -1,11 +1,12 @@
 <resources>
     <string name="app_name">Nalanda</string>
     <string name="welcomeText">Nalanda Super Market</string>
-    <string name="subtitle">Everything</string>
+    <string name="subtitle">Everything in one place</string>
     <string name="title_activity_home">Nalanda Super</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_settings">Settings</string>
+    <string name="action_logout">Log Out</string>
     <string-array name="gender">
         <item>Male</item>
         <item>Female</item>
