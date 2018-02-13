@@ -43,24 +43,11 @@ public class HomeActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        View header = navigationView.getHeaderView(0);
-        regLink = (TextView) header.findViewById(R.id.reg_link);
-        logingLink = (TextView) header.findViewById(R.id.login_link);
+        // View header = navigationView.getHeaderView(0);
+        //regLink = (TextView) header.findViewById(R.id.reg_link);
+        // logingLink = (TextView) header.findViewById(R.id.login_link);
 
-        regLink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(HomeActivity.this , RegisterActivity.class);
-                startActivity(intent);
-            }
-        });
-        logingLink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
-                startActivity(intent);
-            }
-        });
+
 
     }
 
@@ -102,8 +89,9 @@ public class HomeActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_signup) {
-            // Handle the camera action
+        if (id == R.id.nav_signin) {
+            Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_myaccount) {
             regLink = (TextView)findViewById(R.id.reg_link);
             Toast.makeText(HomeActivity.this,regLink.getText().toString(),Toast.LENGTH_LONG).show();

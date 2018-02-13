@@ -31,6 +31,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Login" />
+
+        <TextView
+            android:textColor="#74b9ff"
+            android:id="@+id/reg_link"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No account yet? Create one"
+            android:clickable="true"
+            android:textAlignment="center" />
     </LinearLayout>
 
 

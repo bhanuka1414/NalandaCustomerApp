@@ -1,6 +1,7 @@
 package com.bp.nalandacustomerapp;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bp.nalandacustomerapp.services.Validation;
@@ -32,7 +34,7 @@ public class LoginActivity extends AppCompatActivity implements Validation {
     private Button btnLoging;
     private final String URL_DB = "https://nalanda-super.000webhostapp.com/android/user/login_reg.php";
     ProgressDialog progressDialog;
-
+    private TextView regLink;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +42,7 @@ public class LoginActivity extends AppCompatActivity implements Validation {
         txtUn = (EditText) findViewById(R.id.logUserName);
         txtPw = (EditText) findViewById(R.id.logPassword);
         btnLoging = (Button) findViewById(R.id.logBtn);
-
+        regLink = (TextView) findViewById(R.id.reg_link);
         btnLoging.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -56,6 +58,14 @@ public class LoginActivity extends AppCompatActivity implements Validation {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
+
+        regLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
