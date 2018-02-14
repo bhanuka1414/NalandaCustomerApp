@@ -8,4 +8,20 @@
     tools:context="com.bp.nalandacustomerapp.HomeActivity"
     tools:showIn="@layout/app_bar_home">
 
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp"
+        tools:ignore="MissingConstraints">
+
+        <fragment
+            android:name="com.bp.nalandacustomerapp.CatMenuFragment"
+            android:id="@+id/article_fragment"
+            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+
+    </HorizontalScrollView>
+
 </android.support.constraint.ConstraintLayout>

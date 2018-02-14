@@ -1,5 +1,7 @@
 package com.bp.nalandacustomerapp;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -47,8 +49,6 @@ public class HomeActivity extends AppCompatActivity
         //regLink = (TextView) header.findViewById(R.id.reg_link);
         // logingLink = (TextView) header.findViewById(R.id.login_link);
 
-
-
     }
 
     @Override
@@ -93,8 +93,8 @@ public class HomeActivity extends AppCompatActivity
             Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_myaccount) {
-            regLink = (TextView)findViewById(R.id.reg_link);
-            Toast.makeText(HomeActivity.this,regLink.getText().toString(),Toast.LENGTH_LONG).show();
+            // Intent intent = new Intent(HomeActivity.this, ProductActivity.class);
+            // startActivity(intent);
         } else if (id == R.id.nav_myorders) {
 
         } else if (id == R.id.nav_cart) {
