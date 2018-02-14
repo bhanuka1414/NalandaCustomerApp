@@ -1,8 +1,8 @@
 package com.bp.nalandacustomerapp;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -15,12 +15,29 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private TextView regLink, logingLink;
+    private ArrayList<HashMap<String, String>> productList;
+    private ListView pList;
+    private ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +65,10 @@ public class HomeActivity extends AppCompatActivity
         // View header = navigationView.getHeaderView(0);
         //regLink = (TextView) header.findViewById(R.id.reg_link);
         // logingLink = (TextView) header.findViewById(R.id.login_link);
+        productList = new ArrayList<>();
+        pList = (ListView) findViewById(R.id.productList);
+
+        new BackgroundJson().execute();
 
     }
 
@@ -110,6 +131,88 @@ public class HomeActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    class BackgroundJson extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected void onPreExecute() {
+            progressDialog = new ProgressDialog(HomeActivity.this);
+            progressDialog.setMessage("plz wait..");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(Void v) {
+            progressDialog.dismiss();
+            ListAdapter adapter = new SimpleAdapter(HomeActivity.this, productList, R.layout.product_listview,
+                    new String[]{"id", "name", "img"}, new int[]{R.id.nametxt, R.id.emtxt, R.id.pnotxt});
+            pList.setAdapter(adapter);
+
+            super.onPostExecute(v);
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            String myUrl = "http://nalandasuper.cf/android/user/login_reg.php";
+            String json = " ";
+            productList.clear();
+            try {
+                URL url = new URL(myUrl);
+                HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                con.setRequestMethod("GET");
+                con.connect();
+                String line = "";
+
+
+                BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                //line = br.readLine().toString();
+                while ((line = br.readLine()) != null) {
+                    json += line;
+                }
+
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                JSONObject jsonObject = new JSONObject(json);
+                JSONArray jsonArray = jsonObject.getJSONArray("userdata");
+
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject c = jsonArray.getJSONObject(i);
+                    HashMap<String, String> hashMap = new HashMap<>();
+                    hashMap.put("id", c.getString("id"));
+                    hashMap.put("name", c.getString("name"));
+                    hashMap.put("img", c.getString("img"));
+                    //JSONObject p = c.getJSONObject("phone");
+                    //hashMap.put("mob",p.getString("mobile"));
+
+                    productList.add(hashMap);
+                }
+
+                //testing
+                // Iterator<HashMap<String,String>> it = full_lList.iterator();
+        /*    for (HashMap<String,String> h : full_lList){
+
+                String name = h.get("name");
+                String em = h.get("email");
+                String p = h.get("mob");
+
+                test += name+" "+em+" "+p+"\n";
+
+            }*/
+
+            } catch (Exception e) {
+
+            }
+
+            return null;
+        }
     }
 
 }
