@@ -20,6 +20,8 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+import com.bp.nalandacustomerapp.services.CustomListAdapter_1;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -35,7 +37,9 @@ import java.util.HashMap;
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private TextView regLink, logingLink;
-    private ArrayList<HashMap<String, String>> productList;
+    private String[] productNameList;
+    private String[] productPriceList;
+    private String[] productImgList;
     private ListView pList;
     private ProgressDialog progressDialog;
     @Override
@@ -65,7 +69,7 @@ public class HomeActivity extends AppCompatActivity
         // View header = navigationView.getHeaderView(0);
         //regLink = (TextView) header.findViewById(R.id.reg_link);
         // logingLink = (TextView) header.findViewById(R.id.login_link);
-        productList = new ArrayList<>();
+
         pList = (ListView) findViewById(R.id.productList);
 
         new BackgroundJson().execute();
@@ -146,10 +150,11 @@ public class HomeActivity extends AppCompatActivity
         @Override
         protected void onPostExecute(Void v) {
             progressDialog.dismiss();
-            ListAdapter adapter = new SimpleAdapter(HomeActivity.this, productList, R.layout.product_listview,
-                    new String[]{"id", "name", "img"}, new int[]{R.id.nametxt, R.id.emtxt, R.id.pnotxt});
+            //ListAdapter adapter = new SimpleAdapter(HomeActivity.this, productList, R.layout.product_listview,
+            //new String[]{"id", "name", "img"}, new int[]{R.id.nametxt, R.id.emtxt, R.id.pnotxt});
+            //pList.setAdapter(adapter);
+            CustomListAdapter_1 adapter = new CustomListAdapter_1(HomeActivity.this, productNameList, productPriceList, productImgList);
             pList.setAdapter(adapter);
-
             super.onPostExecute(v);
         }
 
@@ -157,7 +162,7 @@ public class HomeActivity extends AppCompatActivity
         protected Void doInBackground(Void... voids) {
             String myUrl = "http://nalandasuper.cf/android/user/login_reg.php";
             String json = " ";
-            productList.clear();
+
             try {
                 URL url = new URL(myUrl);
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -182,17 +187,16 @@ public class HomeActivity extends AppCompatActivity
             try {
                 JSONObject jsonObject = new JSONObject(json);
                 JSONArray jsonArray = jsonObject.getJSONArray("userdata");
-
+                productImgList = new String[jsonArray.length()];
+                productNameList = new String[jsonArray.length()];
+                productPriceList = new String[jsonArray.length()];
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject c = jsonArray.getJSONObject(i);
-                    HashMap<String, String> hashMap = new HashMap<>();
-                    hashMap.put("id", c.getString("id"));
-                    hashMap.put("name", c.getString("name"));
-                    hashMap.put("img", c.getString("img"));
+                    productPriceList[i] = c.getString("unit_price");
+                    productNameList[i] = c.getString("name");
+                    productImgList[i] = c.getString("img");
                     //JSONObject p = c.getJSONObject("phone");
                     //hashMap.put("mob",p.getString("mobile"));
-
-                    productList.add(hashMap);
                 }
 
                 //testing
