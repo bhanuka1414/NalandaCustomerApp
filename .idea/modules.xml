@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/NalandaCustomerApp.iml" filepath="$PROJECT_DIR$/NalandaCustomerApp.iml" />
+      <module fileurl="file://C:\Users\Samitha\AndroidStudioProjects\NalandaCustomerApp1\NalandaCustomerApp.iml" filepath="C:\Users\Samitha\AndroidStudioProjects\NalandaCustomerApp1\NalandaCustomerApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/NalandaCustomerApp1.iml" filepath="$PROJECT_DIR$/NalandaCustomerApp1.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

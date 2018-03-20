@@ -10,7 +10,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+
         <activity
             android:name=".HomeActivity"
             android:label="@string/title_activity_home"
@@ -30,7 +30,10 @@
         <activity
             android:name=".LoginActivity"
             android:label="Login" />
-        <activity android:name=".ProductListActivity"></activity>
+        <activity android:name=".ProductListActivity" />
+        <activity android:name=".searchbarActivity" />
+        <activity android:name=".ItemActivity" />
+        <activity android:name=".itemDetailActivity"></activity>
     </application>
 
 </manifest>
