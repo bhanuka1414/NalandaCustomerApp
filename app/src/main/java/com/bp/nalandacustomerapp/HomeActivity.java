@@ -15,11 +15,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bp.nalandacustomerapp.services.CommonConstants;
 import com.bp.nalandacustomerapp.services.CustomListAdapter_1;
 
 import org.json.JSONArray;
@@ -37,10 +40,10 @@ import java.util.HashMap;
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private TextView regLink, logingLink;
-    private String[] productNameList;
-    private String[] productPriceList;
-    private String[] productImgList;
-    private ListView pList;
+    private String[] catNameList;
+    private String[] catIdList;
+    private String[] catImgList;
+    private ListView cList;
     private ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,9 +74,20 @@ public class HomeActivity extends AppCompatActivity
         // logingLink = (TextView) header.findViewById(R.id.login_link);
         //bp
 
-        pList = (ListView) findViewById(R.id.productList);
+        cList = (ListView) findViewById(R.id.catList);
 
         new BackgroundJson().execute();
+
+        cList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String catId = ((TextView) view.findViewById(R.id.cat_id)).getText().toString();
+                Intent intent = new Intent(HomeActivity.this, ProductListActivity.class);
+                intent.putExtra("cat_id", catId);
+                startActivity(intent);
+            }
+        });
 
     }
 
@@ -150,14 +164,14 @@ public class HomeActivity extends AppCompatActivity
             //ListAdapter adapter = new SimpleAdapter(HomeActivity.this, productList, R.layout.product_listview,
             //new String[]{"id", "name", "img"}, new int[]{R.id.nametxt, R.id.emtxt, R.id.pnotxt});
             //pList.setAdapter(adapter);
-            CustomListAdapter_1 adapter = new CustomListAdapter_1(HomeActivity.this, productNameList, productPriceList, productImgList);
-            pList.setAdapter(adapter);
+            CustomListAdapter_1 adapter = new CustomListAdapter_1(HomeActivity.this, catIdList, catImgList, catNameList);
+            cList.setAdapter(adapter);
             super.onPostExecute(v);
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
-            String myUrl = "http://nalandasuper.cf/android/user/login_reg.php";
+            String myUrl = CommonConstants.SITE_URL + "cat_load.php";
             String json = " ";
 
             try {
@@ -183,15 +197,15 @@ public class HomeActivity extends AppCompatActivity
 
             try {
                 JSONObject jsonObject = new JSONObject(json);
-                JSONArray jsonArray = jsonObject.getJSONArray("userdata");
-                productImgList = new String[jsonArray.length()];
-                productNameList = new String[jsonArray.length()];
-                productPriceList = new String[jsonArray.length()];
+                JSONArray jsonArray = jsonObject.getJSONArray("cat_data");
+                catImgList = new String[jsonArray.length()];
+                catNameList = new String[jsonArray.length()];
+                catIdList = new String[jsonArray.length()];
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject c = jsonArray.getJSONObject(i);
-                    productPriceList[i] = c.getString("unit_price");
-                    productNameList[i] = c.getString("name");
-                    productImgList[i] = c.getString("img");
+                    catNameList[i] = c.getString("name");
+                    catImgList[i] = c.getString("img");
+                    catIdList[i] = c.getString("id");
                     //JSONObject p = c.getJSONObject("phone");
                     //hashMap.put("mob",p.getString("mobile"));
                 }

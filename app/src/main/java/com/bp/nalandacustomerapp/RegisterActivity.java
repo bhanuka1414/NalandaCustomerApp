@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.bp.nalandacustomerapp.services.CommonConstants;
 import com.bp.nalandacustomerapp.services.Validation;
 
 import org.apache.http.client.ClientProtocolException;
@@ -32,7 +33,7 @@ import java.net.URLEncoder;
 public class RegisterActivity extends AppCompatActivity implements Validation {
     private EditText name, address, phone, email, pw, rePw;
     private Button regBtn;
-    private final String URL_DB = "https://nalanda-super.000webhostapp.com/android/user/login_reg.php";
+    private final String URL_DB = CommonConstants.SITE_URL + "login_reg.php";
     ProgressDialog progressDialog;
 
     @Override

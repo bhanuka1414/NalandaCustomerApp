@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bp.nalandacustomerapp.services.CommonConstants;
 import com.bp.nalandacustomerapp.services.Validation;
 
 import org.apache.http.client.ClientProtocolException;
@@ -32,7 +33,7 @@ import java.net.URLEncoder;
 public class LoginActivity extends AppCompatActivity implements Validation {
     private EditText txtUn, txtPw;
     private Button btnLoging;
-    private final String URL_DB = "https://nalanda-super.000webhostapp.com/android/user/login_reg.php";
+    private final String URL_DB = CommonConstants.SITE_URL + "login_reg.php";
     ProgressDialog progressDialog;
     private TextView regLink;
     @Override
