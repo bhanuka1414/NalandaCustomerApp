@@ -69,6 +69,7 @@ public class HomeActivity extends AppCompatActivity
         // View header = navigationView.getHeaderView(0);
         //regLink = (TextView) header.findViewById(R.id.reg_link);
         // logingLink = (TextView) header.findViewById(R.id.login_link);
+        //bp
 
         pList = (ListView) findViewById(R.id.productList);
 
