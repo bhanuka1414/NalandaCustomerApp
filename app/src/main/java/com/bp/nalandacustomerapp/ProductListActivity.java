@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -31,6 +33,7 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class ProductListActivity extends AppCompatActivity {
@@ -41,17 +44,21 @@ public class ProductListActivity extends AppCompatActivity {
     private String[] productImgList;
     private String[] productPriceList;
     private String[] productStockList;
+
     private List<String> subCatsList;
+    HashMap<Integer,String> subCatsMap;
 
     private Toolbar tb;
     private Spinner spinner;
 
 
     String id = "";
-    String sid = "no";
+    String sid = "all";
+    int sid_position = 0;
     String myUrl = CommonConstants.SITE_URL + "product_load.php";
 
     boolean error = false;
+    boolean alreadyExecuted = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,11 +70,37 @@ public class ProductListActivity extends AppCompatActivity {
 
         tb =(Toolbar) findViewById(R.id.toolPList);
         spinner = (Spinner)findViewById(R.id.spinner);
+        pList = (ListView) findViewById(R.id.productList);
+
+        subCatsList = new ArrayList<>();
+        subCatsMap = new HashMap<>();
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+               // Toast.makeText(ProductListActivity.this, spinner.getSelectedItem().toString(), Toast.LENGTH_LONG).show();
+                sid = subCatsMap.get(i);
+                sid_position = i;
+
+                if (!alreadyExecuted){
+                    new BackgroundProductList().execute();
+                }
+                alreadyExecuted = false;
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         //Toast.makeText(ProductListActivity.this,id,Toast.LENGTH_LONG).show();
-        pList = (ListView) findViewById(R.id.productList);
-        subCatsList = new ArrayList<>();
-        new BackgroundProductList().execute();
+
+
+            new BackgroundProductList().execute();
+
+
 
     }
 
@@ -92,6 +125,7 @@ public class ProductListActivity extends AppCompatActivity {
                         subCatsList);
                 subCatAdp.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner.setAdapter(subCatAdp);
+                spinner.setSelection(sid_position);
 
                 CustomProductListAdapter_1 adapter = new CustomProductListAdapter_1(ProductListActivity.this, productIdList, productImgList, productNameList, productPriceList, productStockList);
                 pList.setAdapter(adapter);
@@ -103,6 +137,7 @@ public class ProductListActivity extends AppCompatActivity {
 
            // Toast.makeText(ProductListActivity.this, String.valueOf(sid), Toast.LENGTH_LONG).show();
             error = false;
+            alreadyExecuted = true;
             progressDialog.dismiss();
             super.onPostExecute(aVoid);
         }
@@ -116,7 +151,7 @@ public class ProductListActivity extends AppCompatActivity {
                 HttpPost httpPost = new HttpPost(myUrl);
                 ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
                 params.add(new BasicNameValuePair("cid", id));
-                //params.add(new BasicNameValuePair("sid", sid));
+                params.add(new BasicNameValuePair("sid", sid));
                 /*System.out.println("GO TO?????" + query_string);
                 System.out.println("GO TO PARAM???" + params);*/
                 httpPost.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
@@ -145,12 +180,16 @@ public class ProductListActivity extends AppCompatActivity {
                 }else{
                     JSONArray jsonArray = jsonObject.getJSONArray("product_data");
 
+                    subCatsList.clear();
+                    subCatsMap.clear();
                     subCatsList.add("ALL");
+                    subCatsMap.put(0,"all");
                     if (!jsonObject.getString("subcat_data").equals("fail")){
                         JSONArray subcatArray = jsonObject.getJSONArray("subcat_data");
                         for (int i = 0; i < subcatArray.length(); i++) {
                             JSONObject s = subcatArray.getJSONObject(i);
                             subCatsList.add(s.getString("name"));
+                            subCatsMap.put(i+1,s.getString("id"));
                         }
                     }
                     productImgList = new String[jsonArray.length()];
