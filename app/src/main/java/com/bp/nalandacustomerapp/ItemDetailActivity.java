@@ -3,7 +3,7 @@ package com.bp.nalandacustomerapp;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class itemDetailActivity extends AppCompatActivity {
+public class ItemDetailActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

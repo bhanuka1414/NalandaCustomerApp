@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-    tools:context="com.bp.nalandacustomerapp.searchbarActivity">
+    tools:context="com.bp.nalandacustomerapp.SearchbarActivity">
 
     <android.support.v7.widget.Toolbar
 

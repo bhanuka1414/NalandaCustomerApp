@@ -1,6 +1,8 @@
 package com.bp.nalandacustomerapp;
 
 import android.graphics.Color;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -9,10 +11,11 @@ import android.widget.Toolbar;
 
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
-public class searchbarActivity extends AppCompatActivity {
+public class SearchbarActivity extends AppCompatActivity {
 
     MaterialSearchView searchView;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

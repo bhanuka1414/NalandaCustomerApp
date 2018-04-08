@@ -7,9 +7,48 @@
     tools:context="com.bp.nalandacustomerapp.ProductListActivity"
     android:orientation="vertical">
 
+
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolPList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        app:theme="@style/Base.ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme">
+        <Spinner
+            android:id="@+id/spinner1"
+            android:layout_width="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:textAlignment="textEnd"
+            android:layout_marginTop="5dp"
+            app:popupTheme="@style/Base.Theme.AppCompat.Light"
+            android:entries="@array/testbp"
+            android:layout_height="wrap_content" />
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:textAlignment="textEnd"
+            android:layout_marginTop="5dp"
+            app:popupTheme="@style/Base.Theme.AppCompat.Light"
+            android:layout_height="wrap_content" />
+    </android.support.v7.widget.Toolbar>
+
+
+
+
     <ListView
         android:id="@+id/productList"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content" >
+    </ListView>
 
 </LinearLayout>
