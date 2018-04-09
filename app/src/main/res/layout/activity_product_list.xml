@@ -18,7 +18,7 @@
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme">
         <Spinner
-            android:id="@+id/spinner1"
+            android:id="@+id/sortSpinner"
             android:layout_width="wrap_content"
             android:layout_marginRight="10dp"
             android:layout_marginEnd="10dp"
@@ -27,10 +27,10 @@
             android:textAlignment="textEnd"
             android:layout_marginTop="5dp"
             app:popupTheme="@style/Base.Theme.AppCompat.Light"
-            android:entries="@array/testbp"
+            android:entries="@array/sortOptions"
             android:layout_height="wrap_content" />
         <Spinner
-            android:id="@+id/spinner"
+            android:id="@+id/subCatSpinner"
             android:layout_width="wrap_content"
             android:layout_marginRight="10dp"
             android:layout_marginEnd="10dp"

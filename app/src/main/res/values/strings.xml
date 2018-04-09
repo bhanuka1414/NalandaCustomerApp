@@ -14,10 +14,12 @@
         <item>Female</item>
         <item>Other</item>
     </string-array>
-    <string-array name="testbp">
-        <item>t</item>
-        <item>tt</item>
-        <item>ttt</item>
+    <string-array name="sortOptions">
+        <item>Sort :</item>
+        <item>Price High to Low</item>
+        <item>Price Low to High</item>
+        <item>Name A to Z</item>
+        <item>Name Z to A</item>
     </string-array>
     <string name="title_activity_product">productActivity</string>
     <string name="large_text">

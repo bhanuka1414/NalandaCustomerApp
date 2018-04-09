@@ -46,14 +46,16 @@ public class ProductListActivity extends AppCompatActivity {
     private String[] productStockList;
 
     private List<String> subCatsList;
-    HashMap<Integer,String> subCatsMap;
+    private HashMap<Integer,String> subCatsMap;
 
     private Toolbar tb;
-    private Spinner spinner;
+    private Spinner subCatSpinner;
+    private Spinner sortSpinner;
 
 
     String id = "";
     String sid = "all";
+    String sort = "";
     int sid_position = 0;
     String myUrl = CommonConstants.SITE_URL + "product_load.php";
 
@@ -69,13 +71,14 @@ public class ProductListActivity extends AppCompatActivity {
         id = intent.getStringExtra("cat_id");
 
         tb =(Toolbar) findViewById(R.id.toolPList);
-        spinner = (Spinner)findViewById(R.id.spinner);
+        subCatSpinner = (Spinner)findViewById(R.id.subCatSpinner);
+        sortSpinner = (Spinner)findViewById(R.id.sortSpinner);
         pList = (ListView) findViewById(R.id.productList);
 
         subCatsList = new ArrayList<>();
         subCatsMap = new HashMap<>();
 
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        subCatSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                // Toast.makeText(ProductListActivity.this, spinner.getSelectedItem().toString(), Toast.LENGTH_LONG).show();
@@ -95,10 +98,27 @@ public class ProductListActivity extends AppCompatActivity {
             }
         });
 
+        sortSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                //Toast.makeText(ProductListActivity.this, String.valueOf(i), Toast.LENGTH_LONG).show();
+                sort = String.valueOf(i);
+                if (!alreadyExecuted){
+                    new BackgroundProductList().execute();
+                }
+                alreadyExecuted = false;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
         //Toast.makeText(ProductListActivity.this,id,Toast.LENGTH_LONG).show();
 
 
-            new BackgroundProductList().execute();
+            //new BackgroundProductList().execute();
 
 
 
@@ -124,8 +144,8 @@ public class ProductListActivity extends AppCompatActivity {
                         android.R.layout.simple_spinner_item,
                         subCatsList);
                 subCatAdp.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinner.setAdapter(subCatAdp);
-                spinner.setSelection(sid_position);
+                subCatSpinner.setAdapter(subCatAdp);
+                subCatSpinner.setSelection(sid_position);
 
                 CustomProductListAdapter_1 adapter = new CustomProductListAdapter_1(ProductListActivity.this, productIdList, productImgList, productNameList, productPriceList, productStockList);
                 pList.setAdapter(adapter);
@@ -152,6 +172,7 @@ public class ProductListActivity extends AppCompatActivity {
                 ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
                 params.add(new BasicNameValuePair("cid", id));
                 params.add(new BasicNameValuePair("sid", sid));
+                params.add(new BasicNameValuePair("sort", sort));
                 /*System.out.println("GO TO?????" + query_string);
                 System.out.println("GO TO PARAM???" + params);*/
                 httpPost.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
