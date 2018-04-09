@@ -115,6 +115,16 @@ public class ProductListActivity extends AppCompatActivity {
             }
         });
 
+        pList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Object product_id = (Object) adapterView.getItemAtPosition(i);
+                Intent intent = new Intent(ProductListActivity.this, ItemDetailActivity.class);
+                intent.putExtra("product_id", String.valueOf(product_id));
+                startActivity(intent);
+            }
+        });
+
         //Toast.makeText(ProductListActivity.this,id,Toast.LENGTH_LONG).show();
 
 

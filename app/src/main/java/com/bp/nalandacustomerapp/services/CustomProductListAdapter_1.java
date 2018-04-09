@@ -23,7 +23,7 @@ public class CustomProductListAdapter_1 extends ArrayAdapter<String> {
 
 
     public CustomProductListAdapter_1(Activity context, String[] productIdList, String[] productImgList, String[] productNameList, String[] productPriceList, String[] productStockList) {
-        super(context, R.layout.product_listview, productNameList);
+        super(context, R.layout.product_listview, productIdList);
 
         this.context = context;
         this.productIdList = productIdList;
