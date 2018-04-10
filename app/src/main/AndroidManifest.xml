@@ -6,13 +6,13 @@
 
     <application
         android:allowBackup="true"
+        android:configChanges="orientation"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
+        android:screenOrientation="portrait"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:configChanges="orientation"
-        android:screenOrientation="portrait">
+        android:theme="@style/AppTheme">
         <activity
             android:name=".HomeActivity"
             android:label="@string/title_activity_home"
@@ -38,7 +38,7 @@
         <activity android:name=".SearchbarActivity" />
         <activity android:name=".ItemActivity" />
         <activity android:name=".ItemDetailActivity" />
-
+        <activity android:name=".CartActivity"></activity>
     </application>
 
 </manifest>

@@ -16,11 +16,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bp.nalandacustomerapp.services.CommonConstants;
 import com.bp.nalandacustomerapp.services.CustomListAdapter_1;
@@ -34,8 +31,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -138,6 +133,8 @@ public class HomeActivity extends AppCompatActivity
         } else if (id == R.id.nav_myorders) {
 
         } else if (id == R.id.nav_cart) {
+            Intent intent = new Intent(HomeActivity.this , CartActivity.class);
+            startActivity(intent);
 
         }else if (id == R.id.nav_message) {
 

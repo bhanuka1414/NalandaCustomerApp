@@ -9,6 +9,9 @@
     <string name="logi">Sign In</string>
     <string name="action_logout">Log Out</string>
     <string name="logreg">Not a Member ? Register Now</string>
+    <string name="crttot">Total:</string>
+    <string name="crtpri">Rs.5,000</string>
+    <string name="placeord">Place Order</string>
     <string-array name="gender">
         <item>Male</item>
         <item>Female</item>

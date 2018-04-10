@@ -3,9 +3,12 @@ package com.bp.nalandacustomerapp;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -39,6 +42,7 @@ public class ItemDetailActivity extends AppCompatActivity {
     private TextView pName;
     private TextView pPrice;
     private TextView pDiscription;
+    FloatingActionButton cartBtn;
 
     private String imgUrl = "";
     private String name = "";
@@ -59,6 +63,16 @@ public class ItemDetailActivity extends AppCompatActivity {
         pName = (TextView)findViewById(R.id.item_name);
         pPrice = (TextView)findViewById(R.id.item_price);
         pDiscription = (TextView)findViewById(R.id.item_description);
+        cartBtn = findViewById(R.id.btnCart);
+
+        cartBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                /*Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();*/
+
+            }
+        });
 
         new BackgroundSingleProduct().execute();
 
