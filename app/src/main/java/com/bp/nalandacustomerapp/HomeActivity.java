@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bp.nalandacustomerapp.services.CommonConstants;
@@ -39,7 +40,7 @@ public class HomeActivity extends AppCompatActivity
     private String[] catIdList;
     private String[] catImgList;
     private ListView cList;
-    private ProgressDialog progressDialog;
+    private ProgressBar bar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +71,7 @@ public class HomeActivity extends AppCompatActivity
         //bp
 
         cList = (ListView) findViewById(R.id.catList);
+        bar = (ProgressBar) this.findViewById(R.id.progressBar);
 
         new BackgroundJson().execute();
 
@@ -148,16 +150,17 @@ public class HomeActivity extends AppCompatActivity
     class BackgroundJson extends AsyncTask<Void, Void, Void> {
         @Override
         protected void onPreExecute() {
-            progressDialog = new ProgressDialog(HomeActivity.this);
-            progressDialog.setMessage("plz wait..");
-            progressDialog.setCancelable(false);
-            progressDialog.show();
+            /*progressDialog = new ProgressDialog(HomeActivity.this);
+            progressDialog.setIndeterminate(false);
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.show();*/
+            bar.setVisibility(View.VISIBLE);
             super.onPreExecute();
         }
 
         @Override
         protected void onPostExecute(Void v) {
-            progressDialog.dismiss();
+            bar.setVisibility(View.GONE);
             //ListAdapter adapter = new SimpleAdapter(HomeActivity.this, productList, R.layout.product_listview,
             //new String[]{"id", "name", "img"}, new int[]{R.id.nametxt, R.id.emtxt, R.id.pnotxt});
             //pList.setAdapter(adapter);
