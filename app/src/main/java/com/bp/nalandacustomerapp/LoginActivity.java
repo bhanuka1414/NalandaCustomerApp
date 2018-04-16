@@ -2,6 +2,7 @@ package com.bp.nalandacustomerapp;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -99,10 +100,16 @@ public class LoginActivity extends AppCompatActivity implements Validation {
             protected void onPostExecute(String s) {
                 progressDialog.dismiss();
 
-                if (s.toString().trim().equals("seccess")) {
-                    Toast.makeText(LoginActivity.this, "ok", Toast.LENGTH_LONG).show();
-                } else {
+                if (s.toString().trim().equals("invalid")) {
                     Toast.makeText(LoginActivity.this, s, Toast.LENGTH_LONG).show();
+
+                } else {
+                    SharedPreferences.Editor editor = getSharedPreferences(CommonConstants.USER_PREFS_NAME, MODE_PRIVATE).edit();
+                    editor.putString("id", s);
+                    editor.putString("un", String.valueOf(txtUn.getText()));
+                    editor.apply();
+                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                    startActivity(intent);
                 }
                 super.onPostExecute(s);
 

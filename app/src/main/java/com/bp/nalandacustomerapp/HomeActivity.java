@@ -2,6 +2,7 @@ package com.bp.nalandacustomerapp;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -19,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bp.nalandacustomerapp.services.CommonConstants;
 import com.bp.nalandacustomerapp.services.CustomListAdapter_1;
@@ -35,7 +37,7 @@ import java.net.URL;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    private TextView regLink, logingLink;
+    private TextView userMailNav, logingLink;
     private String[] catNameList;
     private String[] catIdList;
     private String[] catImgList;
@@ -65,10 +67,24 @@ public class HomeActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        // View header = navigationView.getHeaderView(0);
+        View header = navigationView.getHeaderView(0);
+        Menu nav_Menu = navigationView.getMenu();
+
+
         //regLink = (TextView) header.findViewById(R.id.reg_link);
-        // logingLink = (TextView) header.findViewById(R.id.login_link);
-        //bp
+        SharedPreferences prefs = getSharedPreferences(CommonConstants.USER_PREFS_NAME, MODE_PRIVATE);
+        String restoredText = prefs.getString("un", null);
+        String name = "";
+        if (restoredText != null) {
+            name = prefs.getString("un", "Not Loging");
+            nav_Menu.findItem(R.id.nav_signin).setVisible(false);
+
+        }else{
+            //Toast.makeText(HomeActivity.this,"not loging",Toast.LENGTH_SHORT).show();
+        }
+         userMailNav = (TextView) header.findViewById(R.id.userEmailNav);
+         userMailNav.setText(name);
+
 
         cList = (ListView) findViewById(R.id.catList);
         bar = (ProgressBar) this.findViewById(R.id.progressBar);
@@ -115,6 +131,14 @@ public class HomeActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        }else if(id == R.id.action_logout){
+            SharedPreferences prefs = getSharedPreferences(CommonConstants.USER_PREFS_NAME, MODE_PRIVATE);
+            prefs.edit().clear().commit();
+
+            Toast.makeText(HomeActivity.this, "Logout", Toast.LENGTH_LONG).show();
+            finish();
+            startActivity(getIntent());
+
         }
 
         return super.onOptionsItemSelected(item);
