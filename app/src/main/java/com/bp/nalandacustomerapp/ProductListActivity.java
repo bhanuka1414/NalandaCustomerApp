@@ -44,6 +44,7 @@ public class ProductListActivity extends AppCompatActivity {
     private String[] productImgList;
     private String[] productPriceList;
     private String[] productStockList;
+    private String[] productDisList;
 
     private List<String> subCatsList;
     private HashMap<Integer,String> subCatsMap;
@@ -157,7 +158,7 @@ public class ProductListActivity extends AppCompatActivity {
                 subCatSpinner.setAdapter(subCatAdp);
                 subCatSpinner.setSelection(sid_position);
 
-                CustomProductListAdapter_1 adapter = new CustomProductListAdapter_1(ProductListActivity.this, productIdList, productImgList, productNameList, productPriceList, productStockList);
+                CustomProductListAdapter_1 adapter = new CustomProductListAdapter_1(ProductListActivity.this, productIdList, productImgList, productNameList, productPriceList, productStockList,productDisList);
                 pList.setAdapter(adapter);
             }else{
                 Toast.makeText(ProductListActivity.this, "No Products in this category", Toast.LENGTH_LONG).show();
@@ -228,6 +229,7 @@ public class ProductListActivity extends AppCompatActivity {
                     productIdList = new String[jsonArray.length()];
                     productPriceList = new String[jsonArray.length()];
                     productStockList = new String[jsonArray.length()];
+                    productDisList = new String[jsonArray.length()];
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject c = jsonArray.getJSONObject(i);
                         productNameList[i] = c.getString("name");
@@ -235,6 +237,7 @@ public class ProductListActivity extends AppCompatActivity {
                         productIdList[i] = c.getString("id");
                         productPriceList[i] = c.getString("unit_price");
                         productStockList[i] = c.getString("qty");
+                        productDisList[i] = c.getString("discription_long");
                         //JSONObject p = c.getJSONObject("phone");
                         //hashMap.put("mob",p.getString("mobile"));
                     }

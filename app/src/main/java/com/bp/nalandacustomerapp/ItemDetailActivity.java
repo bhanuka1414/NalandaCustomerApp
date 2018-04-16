@@ -16,6 +16,8 @@ import android.widget.Toast;
 
 import com.bp.nalandacustomerapp.services.CommonConstants;
 import com.bp.nalandacustomerapp.services.CustomProductListAdapter_1;
+import com.bp.nalandacustomerapp.services.DatabaseHelper;
+import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 import com.squareup.picasso.Picasso;
 
 import org.apache.http.HttpEntity;
@@ -36,21 +38,24 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class ItemDetailActivity extends AppCompatActivity {
+    DatabaseHelper db;
 
-    private String id = "";
     private ImageView pImg;
     private TextView pName;
     private TextView pPrice;
     private TextView pDiscription;
     FloatingActionButton cartBtn;
+    private ProgressDialog progressDialog;
+    private ElegantNumberButton qtyBtn;
 
     private String imgUrl = "";
+    private String id = "";
     private String name = "";
     private String price = "";
     private String discription = "";
 
     private String myUrl = CommonConstants.SITE_URL + "single_product_load.php";
-    private ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,17 +64,31 @@ public class ItemDetailActivity extends AppCompatActivity {
         Intent intent = getIntent();
         id = intent.getStringExtra("product_id");
 
+        db = new DatabaseHelper(this);
+
         pImg = (ImageView)findViewById(R.id.img_item);
         pName = (TextView)findViewById(R.id.item_name);
         pPrice = (TextView)findViewById(R.id.item_price);
         pDiscription = (TextView)findViewById(R.id.item_description);
         cartBtn = findViewById(R.id.btnCart);
+        qtyBtn = (ElegantNumberButton)findViewById(R.id.qty_button);
 
         cartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 /*Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();*/
+
+                boolean res = db.insertCart(name,id,String.valueOf(qtyBtn.getNumber()),price,imgUrl);
+
+                if (res){
+                    Snackbar.make(view, "Item Add Cart", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }else{
+                    Snackbar.make(view, "Here's a Error", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
+
 
             }
         });

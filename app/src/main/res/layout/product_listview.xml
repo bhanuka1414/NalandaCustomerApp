@@ -45,7 +45,6 @@ android:orientation="vertical">
         android:layout_marginTop="5dp"
         android:maxLines="3"
         android:layout_toRightOf="@id/productImg"
-        android:text="below styles to apply Lighter theme to your app. This make the text to darker as we have white background to toolbar."
         android:textColor="#a9a9a9"
         android:textSize="12dp" />
 
