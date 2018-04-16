@@ -6,16 +6,23 @@
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     app:cardElevation="4dp"
-    >
+    android:descendantFocusability="blocksDescendants">
 
     <LinearLayout
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         >
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center_vertical|start"
+            android:layout_marginLeft="16dp"
+            android:src="@drawable/ww"
+            android:id="@+id/cartItemImg"/>
 
         <LinearLayout
             android:orientation="vertical"
@@ -34,24 +41,65 @@
                 android:textStyle="bold"
                 android:textSize="16dp"/>
 
-            <TextView
-                android:id="@+id/cartItemPrice"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:gravity="center_vertical|start"
-                android:text="100,000"
-                android:textAllCaps="true"
-                android:textStyle="italic"
-                />
+                android:layout_marginTop="7dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/cartItemPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center_vertical|start"
+                    android:text="100"
+                    android:textAllCaps="true"
+                    android:textStyle="italic" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center_vertical|start"
+                    android:text="X"
+                    android:textAllCaps="true" />
+                <TextView
+                    android:id="@+id/cartItemQty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center_vertical|start"
+                    android:text="2"
+                    android:textAllCaps="true"
+                    android:textStyle="italic" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center_vertical|start"
+                    android:text="="
+                    android:textAllCaps="true" />
+                <TextView
+                    android:id="@+id/cartItemTatalPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center_vertical|start"
+                    android:text="200"
+                    android:textAllCaps="true"
+                    android:textStyle="italic" />
+            </LinearLayout>
         </LinearLayout>
-        
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_gravity="center_vertical|end"
             android:layout_marginRight="16dp"
-            android:id="@+id/cartItemCount"/>
+            android:background="@null"
+            android:scaleType="fitXY"
+            android:src="@mipmap/ic_delete"
+            android:id="@+id/cartItemRemoveBtn"/>
+
     </LinearLayout>
 
 </android.support.v7.widget.CardView>

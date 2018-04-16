@@ -20,9 +20,10 @@ public class CustomProductListAdapter_1 extends ArrayAdapter<String> {
     private final String[] productImgList;
     private final String[] productPriceList;
     private final String[] productStockList;
+    private final String[] productDisList;
 
 
-    public CustomProductListAdapter_1(Activity context, String[] productIdList, String[] productImgList, String[] productNameList, String[] productPriceList, String[] productStockList) {
+    public CustomProductListAdapter_1(Activity context, String[] productIdList, String[] productImgList, String[] productNameList, String[] productPriceList, String[] productStockList, String[] productDisList) {
         super(context, R.layout.product_listview, productIdList);
 
         this.context = context;
@@ -31,6 +32,7 @@ public class CustomProductListAdapter_1 extends ArrayAdapter<String> {
         this.productImgList = productImgList;
         this.productPriceList = productPriceList ;
         this.productStockList = productStockList ;
+        this.productDisList = productDisList ;
     }
 
     public View getView(int position, View view, ViewGroup parent) {
@@ -42,6 +44,7 @@ public class CustomProductListAdapter_1 extends ArrayAdapter<String> {
         TextView nametxt = (TextView) rowView.findViewById(R.id.productName);
         TextView pricetxt = (TextView) rowView.findViewById(R.id.productPrice);
         TextView stocktxt = (TextView) rowView.findViewById(R.id.productStock);
+        TextView distxt = (TextView) rowView.findViewById(R.id.productDis);
 
 
         Picasso.with(context).load(productImgList[position]).into(imageView);
@@ -49,6 +52,7 @@ public class CustomProductListAdapter_1 extends ArrayAdapter<String> {
         nametxt.setText(productNameList[position]);
         pricetxt.setText("Rs. "+productPriceList[position]+" /=");
         stocktxt.setText(productStockList[position]+" available");
+        distxt.setText(productDisList[position]);
 
         return rowView;
 
