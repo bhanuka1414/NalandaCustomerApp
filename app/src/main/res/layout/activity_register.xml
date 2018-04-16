@@ -2,57 +2,138 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     tools:context="com.bp.nalandacustomerapp.RegisterActivity">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginTop="20dp">
 
-        <EditText
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/logsymbol"
+            android:src="@drawable/symbol"/>
+
+        <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
             android:inputType="textPersonName"
-            android:hint="Name" />
+            android:hint="Username"
+            android:textColorHint="@color/colorPrimaryDark"
+            android:textSize="16sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:background="@color/colorPrimaryDark"
+            android:drawableLeft="@drawable/ic_account_circle_black_24dp"
+            android:ems="10"
+            app:met_baseColor="@color/colorPrimaryDark"
+            app:met_primaryColor="@color/colorPrimaryDark"/>
 
-        <EditText
+        <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/address"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
             android:inputType="textMultiLine"
-            android:hint="Address"/>
+            android:hint="Home Address"
+            android:textColorHint="@color/colorPrimaryDark"
+            android:textSize="16sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:background="@color/colorPrimaryDark"
+            android:drawableLeft="@drawable/ic_home_black_24dp"
+            android:ems="10"
+            app:met_baseColor="@color/colorPrimaryDark"
+            app:met_primaryColor="@color/colorPrimaryDark"/>
 
-        <EditText
+        <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/phone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
             android:inputType="phone"
-            android:hint="phone no"/>
-        <EditText
+            android:hint="Phnone No."
+            android:textColorHint="@color/colorPrimaryDark"
+            android:textSize="16sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:background="@color/colorPrimaryDark"
+            android:drawableLeft="@drawable/ic_local_phone_black_24dp"
+            android:ems="10"
+            app:met_baseColor="@color/colorPrimaryDark"
+            app:met_primaryColor="@color/colorPrimaryDark"/>
+
+        <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
             android:inputType="textEmailAddress"
-            android:hint="email"/>
-        <EditText
+            android:hint="Email"
+            android:textColorHint="@color/colorPrimaryDark"
+            android:textSize="16sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:background="@color/colorPrimaryDark"
+            android:drawableLeft="@drawable/ic_email_black_24dp"
+            android:ems="10"
+            app:met_baseColor="@color/colorPrimaryDark"
+            app:met_primaryColor="@color/colorPrimaryDark"/>
+
+        <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
             android:inputType="textPassword"
-            android:hint="password"/>
-        <EditText
+            android:hint="Password"
+            android:textColorHint="@color/colorPrimaryDark"
+            android:textSize="16sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:background="@color/colorPrimaryDark"
+            android:drawableLeft="@drawable/ic_lock_black_24dp"
+            android:ems="10"
+            app:met_baseColor="@color/colorPrimaryDark"
+            app:met_primaryColor="@color/colorPrimaryDark"/>
+
+        <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/rePassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
             android:inputType="textPassword"
-            android:hint="Re-password"/>
+            android:hint="Re-Password"
+            android:textColorHint="@color/colorPrimaryDark"
+            android:textSize="16sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:background="@color/colorPrimaryDark"
+            android:drawableLeft="@drawable/ic_lock_black_24dp"
+            android:ems="10"
+            app:met_baseColor="@color/colorPrimaryDark"
+            app:met_primaryColor="@color/colorPrimaryDark"/>
+
         <Button
-            android:layout_width="match_parent"
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:id="@+id/regButton"
-            android:text="Register"/>
+            android:text="Register"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:layout_weight="1"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/colorPrimaryDark"
+            android:clickable="true"
+            />
     </LinearLayout>
 
 

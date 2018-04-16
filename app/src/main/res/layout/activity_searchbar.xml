@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/search_view"
-        app:searchBackground="@color/white"
+        app:searchBackground="@color/colorPrimary"
         app.searchSuggestion="@color/colorPrimary"
         app:searchCloseIcon="@drawable/ic_action_navigation_close_inverted"
         app:searchBackIcon="@drawable/ic_action_navigation_arrow_back_inverted"
@@ -33,7 +33,7 @@
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="55dp"
-        android:divider="@color/white"
+        android:divider="@color/colorPrimary"
         android:dividerHeight="1dp">
 
 

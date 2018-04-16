@@ -38,7 +38,8 @@
         <activity android:name=".SearchbarActivity" />
         <activity android:name=".ItemActivity" />
         <activity android:name=".ItemDetailActivity" />
-        <activity android:name=".CartActivity"></activity>
+        <activity android:name=".CartActivity" />
+        <activity android:name=".statusActivity"></activity>
     </application>
 
 </manifest>

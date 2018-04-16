@@ -133,6 +133,8 @@ public class HomeActivity extends AppCompatActivity
             // Intent intent = new Intent(HomeActivity.this, ProductActivity.class);
             // startActivity(intent);
         } else if (id == R.id.nav_myorders) {
+            Intent intent = new Intent(HomeActivity.this, statusActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_cart) {
             Intent intent = new Intent(HomeActivity.this , CartActivity.class);

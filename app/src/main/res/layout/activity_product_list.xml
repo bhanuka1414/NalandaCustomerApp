@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.bp.nalandacustomerapp.ProductListActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/itmbg">
 
 
 
@@ -13,7 +14,7 @@
         android:id="@+id/toolPList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
+        android:background="@color/colorPrimaryDark"
         app:theme="@style/Base.ThemeOverlay.AppCompat.Dark.ActionBar"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme">
@@ -26,7 +27,7 @@
             android:layout_marginStart="10dp"
             android:textAlignment="textEnd"
             android:layout_marginTop="5dp"
-            app:popupTheme="@style/Base.Theme.AppCompat.Light"
+            app:popupTheme="@style/Base.ThemeOverlay.AppCompat.Dark"
             android:entries="@array/sortOptions"
             android:layout_height="wrap_content" />
         <Spinner
@@ -35,10 +36,10 @@
             android:layout_marginRight="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="0dp"
             android:textAlignment="textEnd"
             android:layout_marginTop="5dp"
-            app:popupTheme="@style/Base.Theme.AppCompat.Light"
+            app:popupTheme="@style/Base.ThemeOverlay.AppCompat.Dark"
             android:layout_height="wrap_content" />
     </android.support.v7.widget.Toolbar>
 
