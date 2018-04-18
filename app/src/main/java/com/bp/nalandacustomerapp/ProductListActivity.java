@@ -206,16 +206,18 @@ public class ProductListActivity extends AppCompatActivity {
             }
 
             try {
+                subCatsList.clear();
+                subCatsMap.clear();
+                subCatsList.add("ALL");
+                subCatsMap.put(0, "all");
+
                 JSONObject jsonObject = new JSONObject(result);
                 if (jsonObject.getString("product_data").trim().equals("fail")){
                     error = true;
                 }else{
                     JSONArray jsonArray = jsonObject.getJSONArray("product_data");
 
-                    subCatsList.clear();
-                    subCatsMap.clear();
-                    subCatsList.add("ALL");
-                    subCatsMap.put(0,"all");
+
                     if (!jsonObject.getString("subcat_data").equals("fail")){
                         JSONArray subcatArray = jsonObject.getJSONArray("subcat_data");
                         for (int i = 0; i < subcatArray.length(); i++) {

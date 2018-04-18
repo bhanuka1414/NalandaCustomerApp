@@ -165,7 +165,8 @@ public class HomeActivity extends AppCompatActivity
             startActivity(intent);
 
         }else if (id == R.id.nav_message) {
-
+            Intent intent = new Intent(HomeActivity.this, LocationPickerActivity.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
