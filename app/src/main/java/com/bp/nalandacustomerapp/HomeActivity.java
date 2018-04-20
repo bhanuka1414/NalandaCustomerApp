@@ -1,6 +1,5 @@
 package com.bp.nalandacustomerapp;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -157,7 +156,7 @@ public class HomeActivity extends AppCompatActivity
             // Intent intent = new Intent(HomeActivity.this, ProductActivity.class);
             // startActivity(intent);
         } else if (id == R.id.nav_myorders) {
-            Intent intent = new Intent(HomeActivity.this, statusActivity.class);
+            Intent intent = new Intent(HomeActivity.this, MyOrdersActivity.class);
             startActivity(intent);
 
         } else if (id == R.id.nav_cart) {
@@ -165,7 +164,7 @@ public class HomeActivity extends AppCompatActivity
             startActivity(intent);
 
         }else if (id == R.id.nav_message) {
-            Intent intent = new Intent(HomeActivity.this, LocationPickerActivity.class);
+            Intent intent = new Intent(HomeActivity.this, MyOrdersActivity.class);
             startActivity(intent);
         }
 

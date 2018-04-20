@@ -69,4 +69,6 @@ public class CartModel {
     public void setImg(String img) {
         this.img = img;
     }
+
+
 }

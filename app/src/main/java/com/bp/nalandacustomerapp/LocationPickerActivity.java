@@ -1,24 +1,34 @@
 package com.bp.nalandacustomerapp;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.IntentSender;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import com.bp.nalandacustomerapp.services.CommonConstants;
+import com.bp.nalandacustomerapp.services.DatabaseHelper;
+import com.bp.nalandacustomerapp.services.models.CartModel;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
@@ -31,23 +41,38 @@ import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.location.places.GeoDataClient;
 import com.google.android.gms.location.places.PlaceDetectionClient;
-import com.google.android.gms.location.places.Places;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.HTTP;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 
 public class LocationPickerActivity extends FragmentActivity implements GoogleMap.OnMyLocationButtonClickListener,
         GoogleMap.OnMyLocationClickListener,
         OnMapReadyCallback {
 
+    private DatabaseHelper db;
+    private ProgressDialog progressDialog;
+    private Button orderBtn;
     SupportMapFragment mapFragment;
     private GoogleMap mMap;
     private GoogleMap.OnCameraIdleListener onCameraIdleListener;
@@ -63,6 +88,13 @@ public class LocationPickerActivity extends FragmentActivity implements GoogleMa
     private Location mLastKnownLocation;
     private final LatLng mDefaultLocation = new LatLng(-33.8523341, 151.2106085);
 
+
+    String msg = "";
+    double userLat = 0.0;
+    double userLng = 0.0;
+    String cartList;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if (Build.VERSION.SDK_INT < 22)
@@ -72,7 +104,44 @@ public class LocationPickerActivity extends FragmentActivity implements GoogleMa
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location_picker);
+
+        db = new DatabaseHelper(this);
+
+        Cursor res = db.getCartItems();
+        if (res.getCount() > 0) {
+            JSONObject json = new JSONObject();
+            JSONArray array = new JSONArray();
+            while (res.moveToNext()) {
+
+                //cartItems.add(new CartModel(res.getInt(0),res.getString(1),res.getString(2),res.getString(3),res.getString(4),res.getString(5)));
+
+
+                try {
+                    //json.put("name", "student");
+
+                    JSONObject item = new JSONObject();
+                    item.put("id", res.getString(2));
+                    item.put("name", res.getString(1));
+                    item.put("qty", res.getString(3));
+                    item.put("price", res.getString(4));
+                    item.put("img", res.getString(5));
+                    array.put(item);
+
+                    json.put("cart", array);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+            cartList = json.toString();
+
+        }
+
+        Intent intent = getIntent();
+        msg = intent.getStringExtra("order_msg");
+
         resutText = (TextView) findViewById(R.id.dragg_result);
+        orderBtn = (Button) findViewById(R.id.l_order_btn);
 
         mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -84,8 +153,15 @@ public class LocationPickerActivity extends FragmentActivity implements GoogleMa
 // position on right bottom
         rlp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, 0);
         rlp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE);
-        rlp.setMargins(0, 0, 100, 0);
+        rlp.setMargins(0, 0, 30, 50);
         displayLocationSettingsRequest(LocationPickerActivity.this);
+
+        orderBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new BackgroundOrderMaking().execute();
+            }
+        });
         configureCameraIdle();
 
     }
@@ -104,8 +180,10 @@ public class LocationPickerActivity extends FragmentActivity implements GoogleMa
                         String locality = addressList.get(0).getAddressLine(0);
                         String country = addressList.get(0).getCountryName();
                         if (!locality.isEmpty() && !country.isEmpty())
-                            //resutText.setText(locality + "  " + country);
-                            resutText.setText(String.valueOf(latLng.latitude) + "  " + String.valueOf(latLng.longitude));
+                            resutText.setText(locality + "  " + country);
+                        //resutText.setText(String.valueOf(latLng.latitude) + "  " + String.valueOf(latLng.longitude));
+                        userLat = latLng.latitude;
+                        userLng = latLng.longitude;
                     }
 
                 } catch (IOException e) {
@@ -202,6 +280,77 @@ public class LocationPickerActivity extends FragmentActivity implements GoogleMa
                 }
             }
         });
+    }
+
+
+    class BackgroundOrderMaking extends AsyncTask<String, Void, String> {
+        String myUrl = CommonConstants.SITE_URL + "make_order.php";
+        SharedPreferences prefs = getSharedPreferences(CommonConstants.USER_PREFS_NAME, MODE_PRIVATE);
+        String restoredText = prefs.getString("un", null);
+        String cid = prefs.getString("id", "Not Loging");
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog = new ProgressDialog(LocationPickerActivity.this);
+            progressDialog.setMessage("plz wait..");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            //Toast.makeText(LocationPickerActivity.this,s,Toast.LENGTH_LONG).show();
+            if (s.trim().equals("1")) {
+                db.clearCart();
+                Toast.makeText(LocationPickerActivity.this, "ok", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(LocationPickerActivity.this, "error!", Toast.LENGTH_LONG).show();
+            }
+            //resutText.setText(s);
+
+
+            progressDialog.dismiss();
+            super.onPostExecute(s);
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            String result = "";
+
+            try {
+                HttpClient httpClient = new DefaultHttpClient();
+                HttpPost httpPost = new HttpPost(myUrl);
+                ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
+                params.add(new BasicNameValuePair("cid", cid));
+                params.add(new BasicNameValuePair("lat", String.valueOf(userLat)));
+                params.add(new BasicNameValuePair("lng", String.valueOf(userLng)));
+                params.add(new BasicNameValuePair("msg", msg));
+                params.add(new BasicNameValuePair("cart_items", cartList));
+                /*System.out.println("GO TO?????" + query_string);
+                System.out.println("GO TO PARAM???" + params);*/
+                httpPost.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
+
+                HttpResponse httpResponse = httpClient.execute(httpPost);
+                //view_account.setText(httpResponse.getStatusLine().toString());
+                HttpEntity httpEntity = httpResponse.getEntity();
+                InputStream inputStream = httpEntity.getContent();
+
+                BufferedReader bufReader = new BufferedReader(new InputStreamReader(inputStream, "utf-8"), 8);
+                StringBuilder builder = new StringBuilder();
+                String line = null;
+                while ((line = bufReader.readLine()) != null) {
+                    builder.append(line + "\n");
+                }
+                inputStream.close();
+                result = builder.toString();
+            } catch (Exception e) {
+                Log.e("log_tag", e.toString());
+            }
+
+
+            return result;
+        }
     }
 
 }
