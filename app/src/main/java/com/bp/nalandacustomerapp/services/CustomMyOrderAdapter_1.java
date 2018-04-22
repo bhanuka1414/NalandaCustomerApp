@@ -10,19 +10,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bp.nalandacustomerapp.R;
+import com.bp.nalandacustomerapp.services.models.OrderModel;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class CustomMyOrderAdapter_1 extends BaseAdapter {
     private Context context;
-    private ArrayList<CartModel> items;
+    private ArrayList<OrderModel> items;
     private DatabaseHelper db;
 
-    public CustomCartAdapter_1() {
+    public CustomMyOrderAdapter_1() {
     }
 
-    public CustomCartAdapter_1(Context context, ArrayList<CartModel> items) {
+    public CustomMyOrderAdapter_1(Context context, ArrayList<OrderModel> items) {
         this.context = context;
         this.items = items;
         db = new DatabaseHelper(context);
@@ -48,34 +49,19 @@ public class CustomMyOrderAdapter_1 extends BaseAdapter {
         // inflate the layout for each list row
         if (convertView == null) {
             convertView = LayoutInflater.from(context).
-                    inflate(R.layout.cart_layout, parent, false);
+                    inflate(R.layout.order_layout, parent, false);
         }
-        final CartModel cartItem = (CartModel) getItem(position);
+        final OrderModel orderItem = (OrderModel) getItem(position);
 
-        ImageView imageView = (ImageView) convertView.findViewById(R.id.cartItemImg);
-        TextView nametxt = (TextView) convertView.findViewById(R.id.cartItemName);
-        TextView pricetxt = (TextView) convertView.findViewById(R.id.cartItemPrice);
-        TextView qtytxt = (TextView) convertView.findViewById(R.id.cartItemQty);
-        TextView totaltxt = (TextView) convertView.findViewById(R.id.cartItemTatalPrice);
-        ImageButton btnRemove = (ImageButton) convertView.findViewById(R.id.cartItemRemoveBtn);
+        TextView oidTxt = (TextView) convertView.findViewById(R.id.order_id);
+        TextView dateTxt = (TextView) convertView.findViewById(R.id.order_date);
+        TextView amrTxt = (TextView) convertView.findViewById(R.id.order_amount);
+        //TextView totaltxt = (TextView) convertView.findViewById(R.id.cartItemTatalPrice);
+        //ImageButton btnRemove = (ImageButton) convertView.findViewById(R.id.cartItemRemoveBtn);
 
-        final int id = position;
-
-        btnRemove.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                db.removeCartItemById(cartItem.getId());
-                items.remove(id);
-                notifyDataSetChanged();
-            }
-
-        });
-
-        Picasso.with(context).load(cartItem.getImg()).into(imageView);
-        nametxt.setText(cartItem.getName());
-        pricetxt.setText(cartItem.getPrice());
-        qtytxt.setText(cartItem.getQty());
-        totaltxt.setText(String.valueOf(Double.parseDouble(cartItem.getPrice()) * Integer.parseInt(cartItem.getQty())));
+        oidTxt.setText(orderItem.getOno());
+        dateTxt.setText(orderItem.getDate());
+        amrTxt.setText(orderItem.getAmount());
 
         return convertView;
     }

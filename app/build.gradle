@@ -10,6 +10,7 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         useLibrary 'org.apache.http.legacy'
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -45,4 +46,5 @@ dependencies {
     implementation 'org.apache.commons:commons-lang3:3.6'
     implementation 'com.google.android.gms:play-services:12.0.1'
     implementation 'com.google.android.gms:play-services-location:11.4.0'
+    implementation 'com.android.support:multidex:1.0.3'
 }
