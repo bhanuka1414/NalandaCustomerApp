@@ -7,10 +7,44 @@
     android:background="@drawable/itmbg"
     tools:context="com.bp.nalandacustomerapp.MyOrdersActivity">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorPrimaryDark">
+
+        <TextView
+            android:id="@+id/title_text_profile_settings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textAllCaps="true"
+            android:text="My Orders"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#fff"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/back_button_myorders"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#fff"
+            android:layout_marginLeft="16dp"
+            android:textSize="25dp"
+            android:text="◀" />
+
+
+    </RelativeLayout>
+
     <ListView
         android:id="@+id/listMyOrders"
         android:layout_width="match_parent"
         android:background="@android:color/transparent"
+        android:layout_marginTop="50dp"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="10.0sp"
         android:layout_height="match_parent"></ListView>
 
     <TextView

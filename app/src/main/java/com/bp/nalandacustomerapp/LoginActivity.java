@@ -100,16 +100,22 @@ public class LoginActivity extends AppCompatActivity implements Validation {
             protected void onPostExecute(String s) {
                 progressDialog.dismiss();
 
-                if (s.toString().trim().equals("invalid")) {
-                    Toast.makeText(LoginActivity.this, s, Toast.LENGTH_LONG).show();
+                if (s.toString().trim().equals("invalid") || s.toString().trim().equals("")) {
+                    Toast.makeText(LoginActivity.this, "invalid user", Toast.LENGTH_LONG).show();
 
                 } else {
+                    String[] userData = s.split(",");
                     SharedPreferences.Editor editor = getSharedPreferences(CommonConstants.USER_PREFS_NAME, MODE_PRIVATE).edit();
-                    editor.putString("id", s);
-                    editor.putString("un", String.valueOf(txtUn.getText()));
+                    editor.putString("id", userData[0]);
+                    editor.putString("name", userData[1]);
+                    editor.putString("address", userData[2]);
+                    editor.putString("phone", userData[3]);
+                    editor.putString("un", userData[4]);//email = un
                     editor.apply();
-                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                    Intent intent = new Intent(LoginActivity.this, WelcomeActivity.class);
                     startActivity(intent);
+                    finish();
+
                 }
                 super.onPostExecute(s);
 

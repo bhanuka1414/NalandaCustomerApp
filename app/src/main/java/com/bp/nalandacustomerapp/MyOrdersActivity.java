@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,6 +43,7 @@ public class MyOrdersActivity extends AppCompatActivity {
     private ArrayList<OrderModel> orderList;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +69,13 @@ public class MyOrdersActivity extends AppCompatActivity {
                 }
             }, 2000);
         }
+
+        findViewById(R.id.back_button_myorders).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
     }
 

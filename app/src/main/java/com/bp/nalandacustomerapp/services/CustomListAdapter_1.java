@@ -1,4 +1,4 @@
-package com.bp.nalandacustomerapp.services;
+/*package com.bp.nalandacustomerapp.services;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -14,7 +14,7 @@ import com.squareup.picasso.Picasso;
 /**
  * Created by bp on 12/22/2017.
  */
-
+/*
 public class CustomListAdapter_1 extends ArrayAdapter<String> {
 
     private final Activity context;
@@ -53,3 +53,4 @@ public class CustomListAdapter_1 extends ArrayAdapter<String> {
 
     ;
 }
+*/

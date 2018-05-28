@@ -45,6 +45,13 @@ dependencies {
     implementation 'com.android.support:design:26.1.0'
     implementation 'org.apache.commons:commons-lang3:3.6'
     implementation 'com.google.android.gms:play-services:12.0.1'
-    implementation 'com.google.android.gms:play-services-location:11.4.0'
+    implementation 'com.google.android.gms:play-services-location:12.0.1'
     implementation 'com.android.support:multidex:1.0.3'
+    implementation 'com.github.jd-alexander:library:1.1.0'
+    implementation 'com.google.firebase:firebase-core:12.0.1'
+    //implementation 'com.google.firebase:firebase-messaging:15.0.2'
+    implementation 'com.google.firebase:firebase-messaging:12.0.1'
+    implementation 'com.squareup.okhttp3:okhttp:3.2.0'
 }
+
+apply plugin: 'com.google.gms.google-services'

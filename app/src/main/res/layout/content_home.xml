@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/cardview_light_background"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.bp.nalandacustomerapp.HomeActivity"
-    tools:showIn="@layout/app_bar_home"
-    android:orientation="vertical">
+    tools:showIn="@layout/app_bar_home">
 
 
     <ProgressBar
@@ -17,14 +17,34 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:visibility="gone"
-        android:background="@drawable/progressbar" >
-    </ProgressBar>
+        android:background="@drawable/progressbar"
+        android:visibility="gone" />
 
-    <ListView
-        android:id="@+id/catList"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/bannerImg"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_alignParentTop="true"
+                android:layout_margin="8dp"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/banner5" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/catList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/bannerImg" />
+        </RelativeLayout>
+    </ScrollView>
 
 
 </RelativeLayout>

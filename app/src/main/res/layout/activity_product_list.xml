@@ -27,7 +27,7 @@
             android:layout_marginStart="10dp"
             android:textAlignment="textEnd"
             android:layout_marginTop="5dp"
-            app:popupTheme="@style/Base.ThemeOverlay.AppCompat.Dark"
+            app:popupTheme="@style/Base.ThemeOverlay.AppCompat.Light"
             android:entries="@array/sortOptions"
             android:layout_height="wrap_content" />
         <Spinner
@@ -39,7 +39,7 @@
             android:layout_marginStart="0dp"
             android:textAlignment="textEnd"
             android:layout_marginTop="5dp"
-            app:popupTheme="@style/Base.ThemeOverlay.AppCompat.Dark"
+            app:popupTheme="@style/Base.ThemeOverlay.AppCompat.Light"
             android:layout_height="wrap_content" />
     </android.support.v7.widget.Toolbar>
 

@@ -79,6 +79,7 @@ public class ProductListActivity extends AppCompatActivity {
         subCatsList = new ArrayList<>();
         subCatsMap = new HashMap<>();
 
+
         subCatSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {

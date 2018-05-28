@@ -2,10 +2,14 @@ package com.bp.nalandacustomerapp;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -22,7 +26,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bp.nalandacustomerapp.services.CommonConstants;
-import com.bp.nalandacustomerapp.services.CustomListAdapter_1;
+import com.bp.nalandacustomerapp.services.CustomCatAdapter;
+//import com.bp.nalandacustomerapp.services.CustomListAdapter_1;
+import com.bp.nalandacustomerapp.services.DatabaseHelper;
+import com.bp.nalandacustomerapp.services.models.CatModel;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -33,21 +42,28 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, CustomCatAdapter.ItemClickListener {
     private TextView userMailNav, logingLink;
-    private String[] catNameList;
-    private String[] catIdList;
-    private String[] catImgList;
-    private ListView cList;
+    private ArrayList<CatModel> catLists;
+    private RecyclerView cList;
     private ProgressBar bar;
+    private DatabaseHelper databaseHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        databaseHelper = new DatabaseHelper(HomeActivity.this);
+
+        FirebaseMessaging.getInstance().subscribeToTopic("test");
+        FirebaseInstanceId.getInstance().getToken();
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -76,6 +92,8 @@ public class HomeActivity extends AppCompatActivity
         String name = "";
         if (restoredText != null) {
             name = prefs.getString("un", "Not Loging");
+            FirebaseMessaging.getInstance().subscribeToTopic("test");
+            FirebaseInstanceId.getInstance().getToken();
             nav_Menu.findItem(R.id.nav_signin).setVisible(false);
 
         }else{
@@ -84,22 +102,17 @@ public class HomeActivity extends AppCompatActivity
          userMailNav = (TextView) header.findViewById(R.id.userEmailNav);
          userMailNav.setText(name);
 
+        catLists = new ArrayList<>();
 
-        cList = (ListView) findViewById(R.id.catList);
+        cList = (RecyclerView) findViewById(R.id.catList);
         bar = (ProgressBar) this.findViewById(R.id.progressBar);
 
         new BackgroundJson().execute();
 
-        cList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String catId = ((TextView) view.findViewById(R.id.cat_id)).getText().toString();
-                Intent intent = new Intent(HomeActivity.this, ProductListActivity.class);
-                intent.putExtra("cat_id", catId);
-                startActivity(intent);
-            }
-        });
+        GridLayoutManager layoutManager = new GridLayoutManager(HomeActivity.this, 2);
+        cList.setLayoutManager(layoutManager);
+
 
     }
 
@@ -129,7 +142,8 @@ public class HomeActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            Intent intent = new Intent(HomeActivity.this, SettingsActivity.class);
+            startActivity(intent);
         }else if(id == R.id.action_logout){
             SharedPreferences prefs = getSharedPreferences(CommonConstants.USER_PREFS_NAME, MODE_PRIVATE);
             prefs.edit().clear().commit();
@@ -153,8 +167,8 @@ public class HomeActivity extends AppCompatActivity
             Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_myaccount) {
-            // Intent intent = new Intent(HomeActivity.this, ProductActivity.class);
-            // startActivity(intent);
+            Intent intent = new Intent(HomeActivity.this, ProfileActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_myorders) {
             Intent intent = new Intent(HomeActivity.this, MyOrdersActivity.class);
             startActivity(intent);
@@ -164,13 +178,23 @@ public class HomeActivity extends AppCompatActivity
             startActivity(intent);
 
         }else if (id == R.id.nav_message) {
-            Intent intent = new Intent(HomeActivity.this, MyOrdersActivity.class);
+            Intent intent = new Intent(HomeActivity.this, MessagesShowActivity.class);
             startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+
+        String catId = ((TextView) view.findViewById(R.id.cat_id)).getText().toString();
+        Intent intent = new Intent(HomeActivity.this, ProductListActivity.class);
+        intent.putExtra("cat_id", catId);
+        startActivity(intent);
+
     }
 
     class BackgroundJson extends AsyncTask<Void, Void, Void> {
@@ -190,8 +214,12 @@ public class HomeActivity extends AppCompatActivity
             //ListAdapter adapter = new SimpleAdapter(HomeActivity.this, productList, R.layout.product_listview,
             //new String[]{"id", "name", "img"}, new int[]{R.id.nametxt, R.id.emtxt, R.id.pnotxt});
             //pList.setAdapter(adapter);
-            CustomListAdapter_1 adapter = new CustomListAdapter_1(HomeActivity.this, catIdList, catImgList, catNameList);
-            cList.setAdapter(adapter);
+
+            CustomCatAdapter customCatAdapter = new CustomCatAdapter(HomeActivity.this, catLists);
+            customCatAdapter.setClickListener(HomeActivity.this);
+            cList.setAdapter(customCatAdapter);
+            //Toast.makeText(HomeActivity.this,catLists.toString(),Toast.LENGTH_LONG).show();
+
             super.onPostExecute(v);
         }
 
@@ -224,14 +252,9 @@ public class HomeActivity extends AppCompatActivity
             try {
                 JSONObject jsonObject = new JSONObject(json);
                 JSONArray jsonArray = jsonObject.getJSONArray("cat_data");
-                catImgList = new String[jsonArray.length()];
-                catNameList = new String[jsonArray.length()];
-                catIdList = new String[jsonArray.length()];
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject c = jsonArray.getJSONObject(i);
-                    catNameList[i] = c.getString("name");
-                    catImgList[i] = c.getString("img");
-                    catIdList[i] = c.getString("id");
+                    catLists.add(new CatModel(c.getString("id"), c.getString("name"), c.getString("img")));
                     //JSONObject p = c.getJSONObject("phone");
                     //hashMap.put("mob",p.getString("mobile"));
                 }

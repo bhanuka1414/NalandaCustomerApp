@@ -19,7 +19,6 @@
         android:glEsVersion="0x0020000"
         android:required="true" />
 
-
     <application
         android:allowBackup="true"
         android:configChanges="orientation"
@@ -51,7 +50,6 @@
         <activity
             android:name=".ProductListActivity"
             android:theme="@style/AppTheme" />
-        <activity android:name=".SearchbarActivity" />
         <activity android:name=".ItemActivity" />
         <activity android:name=".ItemDetailActivity" />
         <activity android:name=".CartActivity" />
@@ -70,7 +68,27 @@
 
         <activity
             android:name=".LocationPickerActivity"
-            android:label="@string/title_activity_location_picker"></activity>
+            android:label="@string/title_activity_location_picker"
+            android:theme="@style/AppTheme2" />
+        <activity
+            android:name=".TrackOrderActivity"
+            android:label="@string/title_activity_track_order"
+            android:theme="@style/AppTheme2" />
+        <activity android:name=".ProfileActivity" />
+        <activity android:name=".SettingsActivity" />
+
+        <service android:name=".FirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name=".FirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+
+        <activity android:name=".MessagesShowActivity"></activity>
     </application>
 
 </manifest>
