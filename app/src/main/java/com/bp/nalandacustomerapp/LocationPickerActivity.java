@@ -303,7 +303,8 @@ public class LocationPickerActivity extends FragmentActivity implements GoogleMa
             //Toast.makeText(LocationPickerActivity.this,s,Toast.LENGTH_LONG).show();
             if (s.trim().equals("1")) {
                 db.clearCart();
-                Toast.makeText(LocationPickerActivity.this, "ok", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(LocationPickerActivity.this, MyOrdersActivity.class);
+                startActivity(intent);
             } else {
                 Toast.makeText(LocationPickerActivity.this, "error!", Toast.LENGTH_LONG).show();
             }

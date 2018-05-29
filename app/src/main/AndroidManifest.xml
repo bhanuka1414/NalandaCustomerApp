@@ -88,7 +88,8 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".MessagesShowActivity"></activity>
+        <activity android:name=".MessagesShowActivity" />
+        <activity android:name=".SearchResultsActivity"></activity>
     </application>
 
 </manifest>

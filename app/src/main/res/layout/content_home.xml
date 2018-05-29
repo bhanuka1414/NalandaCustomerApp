@@ -20,19 +20,21 @@
         android:background="@drawable/progressbar"
         android:visibility="gone" />
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/bannerImg"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:layout_alignParentTop="true"
                 android:layout_margin="8dp"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
@@ -41,10 +43,12 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/catList"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/bannerImg" />
-        </RelativeLayout>
-    </ScrollView>
+                android:layout_height="wrap_content" />
+
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
 
 
 </RelativeLayout>

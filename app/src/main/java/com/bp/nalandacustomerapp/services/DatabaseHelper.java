@@ -14,7 +14,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TABLE_NAME_3 = "messages_table";
 
     public DatabaseHelper(Context context) {
-        super(context, DB_NAME, null, 2);
+        super(context, DB_NAME, null, 3);
     }
 
     @Override

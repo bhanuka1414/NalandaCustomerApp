@@ -67,10 +67,6 @@ public class TrackOrderActivity extends FragmentActivity implements OnMapReadyCa
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         polylines = new ArrayList<>();
-        ActionBar actionBar = getActionBar();
-        getActionBar().setHomeButtonEnabled(true);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-
 
     }
 
