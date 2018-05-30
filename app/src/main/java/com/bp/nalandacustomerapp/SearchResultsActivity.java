@@ -116,6 +116,7 @@ public class SearchResultsActivity extends AppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             //subCatsList.add("test1");
             //subCatsList.add("test2");
+            //Toast.makeText(SearchResultsActivity.this, test, Toast.LENGTH_LONG).show();
             if (!error) {
                 CustomProductListAdapter_1 adapter = new CustomProductListAdapter_1(SearchResultsActivity.this, productIdList, productImgList, productNameList, productPriceList, productStockList, productDisList);
                 pList.setAdapter(adapter);
@@ -168,6 +169,7 @@ public class SearchResultsActivity extends AppCompatActivity {
                 if (jsonObject.getString("product_data").trim().equals("fail")) {
                     error = true;
                 } else {
+                    error = false;
                     JSONArray jsonArray = jsonObject.getJSONArray("product_data");
 
                     productImgList = new String[jsonArray.length()];

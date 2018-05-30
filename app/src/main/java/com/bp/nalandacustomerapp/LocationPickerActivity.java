@@ -10,8 +10,10 @@ import android.database.Cursor;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
@@ -159,7 +161,26 @@ public class LocationPickerActivity extends FragmentActivity implements GoogleMa
         orderBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new BackgroundOrderMaking().execute();
+                if (ActivityCompat.checkSelfPermission(LocationPickerActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(LocationPickerActivity.this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    Toast.makeText(LocationPickerActivity.this, "grants the permissions.", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent();
+                    intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                    Uri uri = Uri.fromParts("package", LocationPickerActivity.this.getPackageName(), null);
+                    intent.setData(uri);
+                    startActivity(intent);
+
+                    return;
+                }else{
+                    new BackgroundOrderMaking().execute();
+                }
+
             }
         });
         configureCameraIdle();
@@ -207,6 +228,12 @@ public class LocationPickerActivity extends FragmentActivity implements GoogleMa
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
+            Toast.makeText(this, "grants the permissions.", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent();
+            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+            Uri uri = Uri.fromParts("package", this.getPackageName(), null);
+            intent.setData(uri);
+            startActivity(intent);
 
             return;
         }

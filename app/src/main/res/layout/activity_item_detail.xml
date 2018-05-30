@@ -99,11 +99,15 @@
                         android:orientation="horizontal"
                         android:id="@+id/layout_price">
 
-                        <ImageView
+                        <TextView
                             android:layout_weight="1"
-                            android:layout_width="0dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_attach_money"/>
+                            android:text="Rs"
+                            android:textStyle="bold"
+                            android:textSize="25dp"
+                            android:layout_marginLeft="8dp"
+                            android:textColor="@color/colorPrimaryDark"/>
 
                         <TextView
                             android:id="@+id/item_price"

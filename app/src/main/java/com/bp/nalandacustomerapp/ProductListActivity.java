@@ -127,6 +127,13 @@ public class ProductListActivity extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.back_button_plist).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
         //Toast.makeText(ProductListActivity.this,id,Toast.LENGTH_LONG).show();
 
 
@@ -216,6 +223,7 @@ public class ProductListActivity extends AppCompatActivity {
                 if (jsonObject.getString("product_data").trim().equals("fail")){
                     error = true;
                 }else{
+                    error = false;
                     JSONArray jsonArray = jsonObject.getJSONArray("product_data");
 
 

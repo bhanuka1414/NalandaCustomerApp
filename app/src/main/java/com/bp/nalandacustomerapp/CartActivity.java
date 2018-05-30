@@ -51,7 +51,7 @@ public class CartActivity extends AppCompatActivity {
         if (res.getCount() > 0){
 
             while (res.moveToNext()){
-                total += Double.parseDouble(res.getString(4));
+                total += Double.parseDouble(res.getString(4))* Double.parseDouble(res.getString(3));
                 cartItems.add(new CartModel(res.getInt(0),res.getString(1),res.getString(2),res.getString(3),res.getString(4),res.getString(5)));
 
             }
